@@ -52,8 +52,8 @@ switch($_SERVER['HTTP_HOST'])
 {
 
 	case 'www.seven-re.com':
-		// $hostname = 'streamDemoV1.db.10890232.hostedresource.com' ;
-		$hostname = '127.0.0.1' ;
+		$hostname = 'streamDemoV1.db.10890232.hostedresource.com' ;
+		// $hostname = '127.0.0.1' ;
 		$username = 'streamDemoV1' ;
 		$password = 'NeerajSaini28!' ;
 		$database = 'streamDemoV1' ;
@@ -77,6 +77,11 @@ switch($_SERVER['HTTP_HOST'])
 		// $password = 'mysql';
 		// $database = 'trackren_stream_demo_v1' ;
 }
+
+	$hostname = 'streamDemoV1.db.10890232.hostedresource.com' ;
+	$username = 'streamDemoV1' ;
+	$password = 'NeerajSaini28!' ;
+	$database = 'streamDemoV1' ;
 
 $db['default'] = array(
 	'hostname' => $hostname ,
