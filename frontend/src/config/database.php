@@ -51,7 +51,7 @@ $active_record = TRUE;
 switch($_SERVER['HTTP_HOST'])
 {
 
-	case 'www.seven-re.com':
+	case 'seven-re.com':
 		$hostname = 'streamDemoV1.db.10890232.hostedresource.com' ;
 		// $hostname = '127.0.0.1' ;
 		$username = 'streamDemoV1' ;
@@ -59,7 +59,7 @@ switch($_SERVER['HTTP_HOST'])
 		$database = 'streamDemoV1' ;
 	break;
 
-	case 'www.trackre.net':
+	case 'trackre.net':
 		$hostname = '127.0.0.1' ;
 		$username = 'trackren_admin' ;
 		$password = 'trackren_admin' ;

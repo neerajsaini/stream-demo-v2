@@ -44,7 +44,9 @@ function videos_url($uri='')
 
 function assets_url($uri='')
 {
+
 	$host = getHostUrl();
 	$path = trim(str_replace($_SERVER['DOCUMENT_ROOT'], '', ASSETS_PATH),'/').'/';
+	$path = "stream/demo/v2/frontend/www/assets/";
 	return $host.$path.$uri;
 }

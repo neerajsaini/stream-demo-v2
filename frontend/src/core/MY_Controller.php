@@ -31,7 +31,7 @@ class MY_Controller extends CI_Controller
         	'form'
         ));
 
-        echo $_SERVER['HTTP_HOST'];
+        // echo $_SERVER['HTTP_HOST'];
         // $result = $this->db->from('server')->get()->result_array();
         // echo "<pre>".print_r($result)."</pre>";
 	}
