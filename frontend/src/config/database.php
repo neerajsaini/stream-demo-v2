@@ -78,10 +78,10 @@ switch($_SERVER['HTTP_HOST'])
 		// $database = 'trackren_stream_demo_v1' ;
 }
 
-	$hostname = 'streamDemoV1.db.10890232.hostedresource.com' ;
-	$username = 'streamDemoV1' ;
-	$password = 'NeerajSaini28!' ;
-	$database = 'streamDemoV1' ;
+	// $hostname = 'streamDemoV1.db.10890232.hostedresource.com' ;
+	// $username = 'streamDemoV1' ;
+	// $password = 'NeerajSaini28!' ;
+	// $database = 'streamDemoV1' ;
 
 $db['default'] = array(
 	'hostname' => $hostname ,
