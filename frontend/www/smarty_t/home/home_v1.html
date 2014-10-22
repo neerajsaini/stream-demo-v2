@@ -1,0 +1,193 @@
+{{extends file="layout/master_v1.html"}}
+{{block 'css'}} 
+	<style>
+
+		/* jumbotron
+		**********************************************/
+			.jumbotron { background-color: rgb(17,17,17); margin-bottom: 0; padding-top: 100px; padding-bottom: 100px; }
+			.jumbotron .logo { max-width: 400px; margin: 0 auto; margin-bottom: 40px; }
+			.jumbotron .slogon { max-width: 1000px; margin: 0 auto; }
+			/*.jumbotron .slogan { padding: 20px 0px; margin-bottom: 20px; color: #ddd; font-weight: 300; }*/
+
+
+		/* contactButtons
+		**********************************************/
+			.contactButtons {  }
+			.contactButtons .btn { border: 1px solid #ddd;  margin: 0px 20px; font-weight: 300; }
+			.contactButtons .btnTryOut { color:#22c7fc; border-color: #22c7fc; }
+			.contactButtons .btnSignUp { color:#fa1557; border-color: #fa1557; }
+
+
+		/* videoBlock
+		**********************************************/
+			#videoBlock  { position: relative; }
+			#videoBlock .controllButtons  { position: absolute; right: 0; bottom: 0; margin: 100px;  z-index: 100; }
+			#videoBlock .controllButtons .cBtn { cursor: pointer; }
+
+
+		/* controllButtons
+		**********************************************/
+			#videoBlock .controllButtons .btnPlay , 
+			#videoBlock .controllButtons .btnPause { 
+				display: block; position: absolute;
+				width: 36px; height: 36px;
+				border: 1px solid #fff; border-radius: 22px;
+				color: #fff; text-indent: -999em; 
+			}
+			#videoBlock .controllButtons .btnPlay:after {
+				content: '';
+				position: absolute; top: 11px; left: 12px;
+				width: 0; height: 0; border: 14px solid transparent; border-width: 7px 14px;
+				border-left-color: #fff; overflow: hidden;
+			}
+			#videoBlock .controllButtons .btnPause:before {
+				content: '';
+				position: absolute; top: 11px; left: 10px;
+				width: 4px; height: 14px; border: 3px solid #fff;
+				border-top: none; border-bottom: none;
+			}
+			#videoBlock .controllButtons .btnPause:after {
+				content: '';
+				position: absolute; top: 11px; right: 10px;
+				width: 4px; height: 14px; border: 3px solid #fff;
+				border-top: none; border-bottom: none;
+			}
+			#videoBlock .controllButtons .btnPause { display: none; }
+
+		/* infoBlock
+		**********************************************/
+			.infoBlock { 
+				position: absolute;  width: 100%; z-index: 10; 
+				text-align: center; 
+				background-color: transparent;
+				opacity: 0.6;
+				padding: 60px 20px;
+			}
+			/*.infoBlock .txtBig { font-size:2em; }*/
+			.infoBlock .txtMain { max-width: 700px; margin: 0 auto; }
+
+
+		/* twitchBlock
+		**********************************************/
+			.twitchBlock { 
+				background-color: #000; padding:200px 20px; 
+				text-align: center; color: #666; 
+				font-size: 36px;  line-height: 2em;
+			}
+			.twitchBlock .logo { max-width: 300px; margin: 0 auto; }
+			.twitchBlock .btnWatch { color:#999; border:1px solid #999; font-size: 20px; font-weight: 300; }
+
+	</style>
+{{/block}}
+{{block 'pgContent'}} 
+	<div class="pgContent">
+
+
+
+		<div class="jumbotron text-center">
+			<img class="logo img-responsive" src="{{images_url('logo/swyo_big.png')}}" alt="">
+			<img class="slogon img-responsive" src="{{images_url('text_content/Slogan 1.png')}}" alt="">
+
+			<!-- <h1 class="slogan">All of your favorite PC content <br> in one place, on any screen </h1> -->
+			<div class="contactButtons">
+				<a class="btn btnTryOut fancybox.ajax" href="{{site_url('login/login_form')}}"> Try it out </a>
+				<a class="btn btnSignUp" href="#"> Sign up </a>
+			</div>
+		</div>
+
+
+		<!-- muted="muted" autoplay="autoplay" loop
+		poster="https://www.paypalobjects.com/webstatic/mktg/wright/videos/pay-on-the-go.jpg"  -->
+		<div id="videoBlock">
+			<video id="bannerVideo" class="video-js vjs-default-skin" loop>
+				<source src="{{videos_url('BannerVideo.mp4')}}" type="video/mp4">
+			    <p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>
+			</video>
+			<div class="controllButtons">
+				<a class="cBtn btnPlay" role="button"> &nbsp; </a>
+				<a class="cBtn btnPause" role="button"> Pause </a>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+
+
+		<div class="infoBlock">
+			<img class="txtMain img-responsive" src="{{images_url('text_content/Slogan 2.png')}}" alt="">
+			<div class="contactButtons">
+				<a class="btn btnTryOut fancybox.ajax" href="{{site_url('login/login_form')}}"> Try it out </a>
+				<a class="btn btnSignUp" href="#"> Sign up </a>
+			</div>
+		</div>
+
+
+		<!-- <div class="twitchBlock">
+			<img class="logo img-responsive" src="{{images_url('logo/swyo_big.png')}}" alt="">
+			<div class="at"> @ </div>
+			<div class="title"> (twitch.tv) </div>
+			<iframe src="http://www.twitch.tv/swyoexp/embed" frameborder="0" scrolling="no" height="378" width="620"></iframe>
+			<br>
+			<a class="btn btnWatch" href="http://www.twitch.tv/swyoexp?tt_medium=live_embed&tt_content=text_link" > Watch live on Twitch </a>
+		</div> -->
+
+		
+		
+		
+		
+	</div>
+{{/block}} 
+{{block 'script'}} 
+	<script>
+
+		$(document).ready(function() {
+
+			$(".infoBlock").css("margin-top", - $(".infoBlock").outerHeight() + 60 );
+
+			$(".btnPlay").click(function(){  
+				$(this).hide();
+				$(".btnPause").show();
+				$(".infoBlock").slideUp();
+			});
+			$(".btnPause").click(function(){  
+				$(this).hide();
+				$(".btnPlay").show();
+				$(".infoBlock").slideDown();
+			});
+
+			$(".contactButtons .btn").fancybox({
+				maxWidth	: 800,
+				maxHeight	: 600,
+				fitToView	: false,
+				//width		: '70%',
+				//height		: '70%',
+				autoSize	: true,
+				closeClick	: false,
+				openEffect	: 'none',
+				closeEffect	: 'none'
+			});
+		});
+
+
+		
+
+		videojs("bannerVideo").ready(function()
+		{
+			var myPlayer = this;
+
+			
+			$("#videoBlock video").css("width","100%");
+		  	$("#videoBlock video").css("height","auto");
+
+		  	myPlayer.width( $(window).width() );
+		  	$("#bannerVideo").css("height",  60 + $("#videoBlock video").height() );
+		  	$( window ).resize(function() {
+		  		myPlayer.width($( window ).width());
+		  		$("#bannerVideo").css("height",  $("#videoBlock video").height() );
+		  		$(".infoBlock").css("margin-top", - $(".infoBlock").outerHeight() );
+		  	});
+
+		  	$(".btnPlay").click(function(){ myPlayer.play(); });
+		  	$(".btnPause").click(function(){ myPlayer.pause(); });
+		});
+		
+	</script>
+{{/block}}

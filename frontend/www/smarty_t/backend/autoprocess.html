@@ -1,0 +1,28 @@
+{{extends file = 'layout/master_play.html'}}
+{{block 'pgContent'}} 
+<div id="result">
+	
+</div>
+{{/block}}
+<!-- MY SCRIPT -->
+{{block 'script'}} 
+<script> $(document).ready(function(){
+// -------------------------------------
+
+	auto_process(true);
+	function auto_process(loop) {
+		$.ajax({
+			url: '{{site_url("backend/ajxAutoProcess")}}',
+		  	dataType: 'json',
+			success: function(response) { 
+				console.log(response); 
+				if(loop==true){
+					setTimeout(function(){ auto_process(loop) }, 10000);
+				}
+			}
+		});
+	}
+
+// -------------------------------------
+}); </script>
+{{/block}}

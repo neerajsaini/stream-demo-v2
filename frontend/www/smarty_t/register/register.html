@@ -1,0 +1,40 @@
+{{extends file = 'layout/master.html'}}
+
+{{block pgContent}} 
+<div class="pgContent">
+	<div class="container">
+
+		<div class="row">
+			<div class="col-sm-6">
+				<h1> Register </h1> 
+				<br><br>
+				<!-- ########## VALIDATION ERRORS ########## -->
+				{{if $ci->form_validation->error_count() > 0}}
+					<div class="validation_errors" style="padding:10px; margin-bottom:20px; background: pink;">
+						{{validation_errors()}}
+					</div>
+				{{/if}}
+				<!-- ########## FORM ########## -->
+				<form method="post" role="form">
+					<div class="form-group">
+						<label for="" class="control-label"> Player Name </label>
+						<input type="text" name="playerName" value="{{set_value('playerName')}}" class="form-control">
+					</div>
+					<div class="form-group">
+						<label for="" class="control-label"> Password </label>
+						<input type="text" name="password" value="{{set_value('password')}}" class="form-control">
+					</div>
+					<div class="form-group">
+						<label for="" class="control-label"> Confirm Password </label>
+						<input type="text" name="confirmPassword" value="" class="form-control">
+					</div>
+					<button type="submit" class="btn btn-warning btn-lg btn-block"> Register </button>
+				</form>
+			</div> <!-- col -->
+		</div> <!-- row -->
+		
+	</div> <!-- container -->
+</div> <!-- pgContent -->
+{{/block}}
+
+{{block 'script'}} {{/block}}

@@ -1,0 +1,292 @@
+<style>
+	#imgObjWrap { position: absolute; z-index:999; width:100%; height:100%; left: 0px; top: 0px; overflow:hidden; }
+	#player { position: absolute; width:100%; height:100%; left: 0px; top: 0px; z-index:0; overflow:hidden; }
+	#out2 { position: relative; margin-left: 80%; font-family: Arial; font-size: 10px; color: green; overflow:hidden; }
+</style>
+
+
+<div id="imgObjWrap">
+	<object type="img/gif" >
+		<img src="{{images_url('transparent.gif')}}" width="100%" height="100%" id="lockgif"></img>
+	</object>
+</div>
+
+<div id="player"></div>    
+<div id="out2"></div>
+
+
+<!-- JANIS SCRIPT -->
+<script type="text/javascript">
+
+
+
+
+	/* BLOCK UNBLOCK
+	****************************************************************/
+	
+
+	/* THE VIDEO PLAYER
+	****************************************************************/
+
+	$f("player", 
+		{
+			src: "http://releases.flowplayer.org/swf/flowplayer-3.2.18.swf",
+			wmode: "opaque"
+		},
+		{ 
+			clip: {
+				url: '{{$serverData.videoID}}',
+				provider: 'rtmp', 
+				accelerated: true,
+				live: true, 
+				scaling: 'fit', 
+				bufferLength: 0.0, 
+				bufferTime: 0.0, 
+				autoPlay: true,
+				onStart: function() {
+						setSizes();
+					}
+			},
+			plugins: {		
+				controls:null,
+				rtmp: { 
+					all:false,
+					url: "flowplayer.rtmp-3.2.13.swf",
+					inBufferSeek:false,
+					netConnectionUrl: 'rtmp://{{$serverData.videoServerIP}}:{{$serverData.videoServerPort}}/{{$serverData.applicationID}}/' 
+				} 
+			}	
+		}
+	);
+
+	/* AJAX FUNCTIONS
+	****************************************************************/
+
+	var lastMove = 0;
+	var vHeight = 0;
+	var wHeight = 0; 
+	var vWidth = 0; 
+	var wWidth = 0;
+	var OffsetX = 0;
+	var OffsetY = 0;
+	var oldX = -1;
+	var oldY = -1;
+
+	function sendAjaxMousePos(x, y) {
+		$.ajax({
+			type: "GET",
+			url: "{{$urlSendKey}}",
+			dataType: 'jsonp',
+			data: { posx: x, width: vWidth, posy: y, height: vHeight }
+			});
+	}
+
+	function sendAjaxKey(status, keyCode) {
+		$.ajax({
+			type: "GET",
+			url: "{{$urlSendKey}}",
+			dataType: 'jsonp',
+			data: { status: status, key: keyCode }
+			});
+	}
+
+	var Key = 
+	{
+	  	pressed: {},
+	  
+	  	isDown: function(keyCode) {
+	    	return this.pressed[keyCode];
+	  	},
+
+	   	sendKeyPressed: function(event) {
+	   		var keyCode = event.keyCode;
+			if(!(Key.isDown(keyCode)))
+			{	//First time pressed, send to server
+				this.pressed[keyCode] = true;
+				sendAjaxKey("kbd", keyCode);
+				//printKeys();
+			}
+	  	},
+
+	  	sendKeyReleased: function(event) {
+			var keyCode = event.keyCode;
+			if(Key.isDown(keyCode))
+			{	//Key released, send to server
+				delete this.pressed[keyCode];
+				//printKeys();
+				sendAjaxKey("kbu", keyCode);
+			}
+	  	}	  
+	};
+
+	function clickStartCallback(e) 
+	{
+		var positionX = (e.clientX || 0) - OffsetX,
+		    positionY = (e.clientY || 0) - OffsetY;
+
+						
+		if( ((positionX >=0) && (positionX <=vWidth)) && ( (positionY >= 0) && (positionY <= vHeight)))
+		{
+			switch (e.which) {
+				case 1: // Left mouse button
+					$.ajax({
+					type: "GET",
+					url: "{{$urlSendKey}}",
+					dataType: 'jsonp',
+					data: { click: "cls", posx: positionX, width: vWidth, posy: positionY, height: vHeight }
+					});	
+					break;
+				case 2: // Middle mouse button
+					break;
+				case 3: // Right mouse button
+					$.ajax({
+					type: "GET",
+					url: "{{$urlSendKey}}",
+					dataType: 'jsonp',
+					data: { click: "crs", posx: positionX, width: vWidth, posy: positionY, height: vHeight }
+					});	
+					break;
+				default:
+					alert('You have a strange Mouse!');
+			}
+
+		}	
+	}
+
+	function clickEndCallback(e) 
+	{
+		var positionX = (e.clientX || 0) - OffsetX,
+		    positionY = (e.clientY || 0) - OffsetY;
+
+		if( ((positionX >=0) && (positionX <=vWidth)) && ( (positionY >= 0) && (positionY <= vHeight)))
+		{
+			switch (e.which) {
+				case 1: // Left mouse button
+					$.ajax({
+					type: "GET",
+					url: "{{$urlSendKey}}",
+					dataType: 'jsonp',
+					data: { click: "cle", posx: positionX, width: vWidth, posy: positionY, height: vHeight }
+					});	
+					break;
+				case 2: // Middle mouse button
+					break;
+				case 3: // Right mouse button
+					$.ajax({
+					type: "GET",
+					url: "{{$urlSendKey}}",
+					dataType: 'jsonp',
+					data: { click: "cre", posx: positionX, width: vWidth, posy: positionY, height: vHeight }
+					});	
+					break;
+				default:
+					alert('You have a strange Mouse!');
+			}
+		}	
+	}
+
+	var wheel = document.getElementById('wheel');
+
+	function mouseScroll(event) {
+	    var normalized;
+	    if (event.wheelDelta) {
+	        normalized = (event.wheelDelta % 120 - 0) == -0 ? event.wheelDelta / 120 : event.wheelDelta / 12;
+	    } else {
+	        var rawAmmount = event.deltaY ? event.deltaY : event.detail;
+	        normalized = -(rawAmmount % 3 ? rawAmmount * 10 : rawAmmount / 3);
+	    }
+		
+		$.ajax({
+			type: "GET",
+			url: "{{$urlSendKey}}",
+			dataType: 'jsonp',
+			data: { scroll: 'csa', amount: normalized }
+			});
+	}
+
+	$( document ).ajaxError(function( event, request, settings ) {
+		  $( "#msg" ).append( "<li>Error requesting page " + settings.url + "</li>" );
+	});
+
+
+	/* HELPER FUNCTIONS
+	****************************************************************/
+
+	function moveCallback(e) 
+	{
+		if(Date.now() - lastMove > 100) {
+			if(true)
+			{ 
+				var positionX = (e.clientX || 0) - OffsetX,
+				positionY = (e.clientY || 0) - OffsetY;
+
+				if( ((positionX >=0) && (positionX <=vWidth)) && ( (positionY >= 0) && (positionY <= vHeight)))
+				{
+					sendAjaxMousePos(positionX, positionY);
+				}	
+
+				var html = '';
+				html += '<div>' + 'mouse position x : ' + positionX + ', y : ' + positionY + '<br>' + 
+				' video width: ' + vWidth + ' height: ' + vHeight + '<br>' +
+				' window width: ' + wWidth + ' height: ' + wHeight + '<br>' +
+				' OffsetX: ' + OffsetX + ' OffsetY: ' + OffsetY + '</div>';                
+				$('#out2').html(html);  
+
+				oldX = e.clientX;
+				oldY = e.clientY;
+
+				lastMove = Date.now();
+			}
+		}
+	}
+
+	
+
+
+
+	/* DOCUMENT
+	****************************************************************/
+
+	$(document).on("keydown", function (e) {
+		if (e.which === 8 && !$(e.target).is("input, textarea")) {
+			e.preventDefault();
+		}
+	});
+
+	$(document).bind('contextmenu', function (e) {
+		e.preventDefault(); // To prevent the default context menu.
+	});
+	
+	var event = 'onwheel' in document ? 'wheel' : 'onmousewheel' in document ? 'mousewheel' : 'DOMMouseScroll';
+	window.addEventListener(event, mouseScroll);
+
+	document.addEventListener('keyup', function(event) { Key.sendKeyReleased(event); }, false);
+	document.addEventListener('keydown', function(event) { Key.sendKeyPressed(event); }, false);
+
+	document.addEventListener("mousedown", clickStartCallback, false);
+	document.addEventListener("mouseup", clickEndCallback, false);
+	
+	$(document).ready(function() {
+		$('#lockgif').mousemove(function(e){
+			moveCallback(e);
+		});
+	});
+
+	function setSizes() 
+    {
+        $f().getClip().update();
+        vHeight = $f().getClip().height;
+        vWidth = $f().getClip().width;
+        wWidth = window.innerWidth;
+        wHeight = window.innerHeight; 
+
+        OffsetX = (wWidth - vWidth)/2.0; 
+        OffsetY = (wHeight - vHeight)/2.0;
+    }
+
+    function lockPointer()
+    {
+    	
+    }
+
+</script>

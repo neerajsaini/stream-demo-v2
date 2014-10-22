@@ -1,0 +1,113 @@
+
+	<style>
+		a.func { text-decoration: none; padding:5px; display: inline-block; background-color: #eee; margin: 10px; }
+	</style>
+	{{foreach $links as $name => $href }}
+		<a href="{{$href}}" class="func"> {{$name}} </a>
+	{{/foreach}}
+
+	<div style="clear:both;"> <hr> </div>
+
+	<div style=" margin:20px; padding:20px; background:#eee; float:left; ">
+		<h2>Server Slot Info</h2>
+		<table border="1" cellpadding="5">
+		<tr>
+			<td>SERVER</td>
+			<td>PLAYER</td>
+		</tr>
+		{{foreach $serverSlotInfo as $row}}
+		<tr>
+			<td> {{$row.serverName}} ({{$row.serverID}}.{{$row.slotNo}}) </td>
+			<td> {{if $row.playerName}} {{$row.playerName}} ({{$row.playerID}}) {{/if}}</td>
+		</tr>
+		{{/foreach}}
+		</table>
+	</div>
+
+	<!-- System Param &&   Counter Param -->
+
+	<div style=" margin:20px; padding:10px; background:#eee; float:left; ">
+		System Param <hr>
+		<table border="0" cellpadding="5">
+		<tr>
+		{{foreach $systemParam as $key=>$val}}
+			<td> {{$key}}: <b>{{$val}}</b> &nbsp;&nbsp;&nbsp;&nbsp; </td>
+		{{/foreach}}
+		</tr>
+		</table>
+
+		<br><br> Counter Param <hr>
+		<table border="0" cellpadding="5">
+		<tr>
+		{{foreach $counterParam as $key=>$val}}
+			<td> {{$key}}: <b>{{$val}}</b> &nbsp;&nbsp;&nbsp;&nbsp; </td>
+		{{/foreach}}
+		</tr>
+		</table>
+	</div>
+
+	<div style="clear:both;"> <hr> </div>
+
+	
+	<!-- Session -->
+
+	<div style=" margin:20px; padding:20px; background:#eee; float:left; ">
+		<h2>Session</h2>
+		<table border="1" cellpadding="5">
+		{{foreach $sessionData as $row name="sessData"}}
+		{{if $smarty.foreach.sessData.index == 0}} 
+		<tr>
+			{{foreach $row as $key=>$col}}
+			<th>{{$key}}</th>
+			{{/foreach}}
+		</tr>
+		{{/if}}
+		<tr>
+			{{foreach $row as $key=>$col}}
+			<td> {{$col}}  {{if $key=='playerID'}}  ::  {{$playerData[$col].playerName}} {{/if}}</td>
+			{{/foreach}}
+		</tr>
+		{{/foreach}}
+		</table>
+	</div>
+
+	<div style="clear:both;"> <hr> </div>
+
+	<div style=" margin:20px; padding:20px; background:#eee; float:left; ">
+		<h2>Session Status LOG</h2>
+		<table border="1" cellpadding="5">
+		{{foreach $sessionStatusLogData as $row name="sssLogData"}}
+		{{if $smarty.foreach.sssLogData.index == 0}} 
+		<tr>
+			{{foreach $row as $key=>$col}}
+			<th>{{$key}}</th>
+			{{/foreach}}
+		</tr>
+		{{/if}}
+		<tr>
+			{{foreach $row as $col}}
+			<td>{{$col}}</td>
+			{{/foreach}}
+		</tr>
+		{{/foreach}}
+		</table>
+	</div>
+	<div style=" margin:20px; padding:20px; background:#eee; float:left; ">
+		<h2>Session LOG</h2>
+		<table border="1" cellpadding="5">
+		{{foreach $sessionLogData as $row name="ssLogData"}}
+		{{if $smarty.foreach.ssLogData.index == 0}} 
+		<tr>
+			{{foreach $row as $key=>$col}}
+			<th>{{$key}}</th>
+			{{/foreach}}
+		</tr>
+		{{/if}}
+		<tr>
+			{{foreach $row as $col}}
+			<td>{{$col}}</td>
+			{{/foreach}}
+		</tr>
+		{{/foreach}}
+		</table>
+	</div>

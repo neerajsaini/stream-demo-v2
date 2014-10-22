@@ -1,0 +1,486 @@
+html,
+body {
+  font-family: 'Lato', sans-serif;
+  font-weight: 300;
+  color: #ddd;
+  background-color: #111111;
+}
+#btnLogout {
+  position: fixed;
+  right: 20px;
+  top: 20px;
+  width: 30px;
+}
+.contactButtons .btn {
+  border: 1px solid #ddd;
+  margin: 0px 20px;
+  font-size: 17px;
+  font-weight: 300;
+}
+.contactButtons .btnTryOut {
+  color: #22c7fc;
+  border-color: #22c7fc;
+}
+.contactButtons .btnTryOut:hover {
+  background-color: #22c7fc;
+  color: #fff;
+}
+.contactButtons .btnSignUp {
+  color: #fa1557;
+  border-color: #fa1557;
+}
+.contactButtons .btnSignUp:hover {
+  background-color: #fa1557;
+  color: #fff;
+}
+.red {
+  color: #fa1557;
+}
+.blue {
+  color: #22c7fc;
+}
+#pgOverlayBeforePlay {
+  bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  background-color: #111111;
+  text-align: center;
+  font-size: 42px;
+}
+#pgOverlayBeforePlay .heading {
+  background-color: #222;
+  padding: 20px;
+  padding-top: 40px;
+  padding-bottom: 30px;
+}
+#pgOverlayBeforePlay .heading .title {
+  font-size: 1.4em;
+  margin-bottom: ;
+}
+#gamePanel {
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  opacity: 0.9;
+}
+#gamePanel .gpHandle {
+  float: right;
+  cursor: pointer;
+  padding: 5px;
+  background-color: #ddd;
+  color: #333;
+  font-size: 14px;
+}
+#gamePanel .gpContent {
+  background-color: #222;
+  font-size: 14px;
+}
+#gamePanel .aboutGame {
+  padding: 10px;
+  float: left;
+  margin-left: 40px;
+}
+#gamePanel .aboutGame h1 {
+  color: #fb477b;
+}
+#gamePanel ul.gpControls {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+  float: right;
+}
+#gamePanel ul.gpControls li {
+  float: left;
+  padding: 10px;
+  margin-right: 40px;
+  color: #999;
+}
+#gamePanel ul.gpControls li .title {
+  font-weight: 300;
+  font-size: 1.5em;
+  padding-bottom: 5px;
+  margin-bottom: 10px;
+  color: #666;
+  border-bottom: 1px solid #666;
+}
+#gamePanel ul.gpControls li .ctrl {
+  color: #ddd;
+}
+.videoControlButtons .btnPlay,
+.videoControlButtons .btnPause {
+  display: none;
+  position: absolute;
+  width: 36px;
+  height: 36px;
+  border: 1px solid #fff;
+  border-radius: 22px;
+  color: #fff;
+  text-indent: -999em;
+  cursor: pointer;
+}
+.videoControlButtons .btnPlay:after {
+  content: '';
+  position: absolute;
+  top: 11px;
+  left: 12px;
+  width: 0;
+  height: 0;
+  border: 14px solid transparent;
+  border-width: 7px 14px;
+  border-left-color: #fff;
+  overflow: hidden;
+}
+.videoControlButtons .btnPause:before {
+  content: '';
+  position: absolute;
+  top: 11px;
+  left: 10px;
+  width: 4px;
+  height: 14px;
+  border: 3px solid #fff;
+  border-top: none;
+  border-bottom: none;
+}
+.videoControlButtons .btnPause:after {
+  content: '';
+  position: absolute;
+  top: 11px;
+  right: 10px;
+  width: 4px;
+  height: 14px;
+  border: 3px solid #fff;
+  border-top: none;
+  border-bottom: none;
+}
+.jumbotron {
+  background-color: transparent;
+  margin-bottom: 0;
+  text-align: center;
+  color: #ddd;
+  padding-top: 100px;
+  padding-bottom: 100px;
+}
+@media screen and (max-width: 768px) {
+  .jumbotron {
+    padding-top: 40px;
+    padding-bottom: 40px;
+  }
+}
+.jumbotron .logoBox {
+  max-width: 400px;
+  margin: auto;
+  margin-bottom: 40px;
+}
+@media screen and (max-width: 768px) {
+  .jumbotron .logoBox {
+    max-width: 180px;
+    margin-bottom: 20px;
+  }
+}
+.jumbotron .logoBox .logo {
+  width: 100%;
+}
+.jumbotron .sloganBox {
+  font-size: 50px;
+  margin-bottom: 60px;
+}
+@media screen and (max-width: 768px) {
+  .jumbotron .sloganBox {
+    font-size: 32px;
+    margin-bottom: 30px;
+  }
+}
+.prototypeVideoBlock {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+}
+.prototypeVideoBlock .videoControlButtons {
+  position: absolute;
+  z-index: 100;
+  bottom: 100px;
+  right: 100px;
+}
+.prototypeVideoBlock .videoOverlayBlock {
+  position: absolute;
+  width: 100%;
+  z-index: 10;
+  padding: 40px 20px;
+  bottom: 0px;
+  text-align: center;
+  background-color: #222;
+  opacity: 0.9;
+}
+.prototypeVideoBlock .videoOverlayBlock .txtBlock {
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+@media screen and (max-width: 768px) {
+  .prototypeVideoBlock .videoOverlayBlock .txtBlock {
+    font-size: 22px;
+  }
+}
+.prototypeVideoBlock .videoOverlayBlock .txtBlock .txtSmall {
+  font-size: 1em;
+  font-weight: 100;
+  margin-bottom: -15px;
+}
+.prototypeVideoBlock .videoOverlayBlock .txtBlock .txtBig {
+  font-size: 2em;
+  font-weight: 100;
+}
+.statBlock {
+  padding: 80px 0px;
+}
+.statBlock .stat {
+  color: #22c7fc;
+  padding: 20px 20px;
+  display: inline-block;
+  text-decoration: none;
+}
+.statBlock .stat.noTesters .val {
+  font-size: 32px;
+}
+.statBlock .stat.noHomePC .val {
+  font-size: 36px;
+}
+.statBlock .stat.noFAQ .val {
+  font-size: 42px;
+}
+.statBlock .stat .val {
+  display: inline-block;
+  line-height: 90px;
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
+  width: 90px;
+  height: 90px;
+  border: 2px solid #fa1557;
+  border: 2px solid #22c7fc;
+  border-radius: 45px;
+  text-align: center;
+  margin: auto;
+}
+.statBlock .stat .lab {
+  font-weight: 300;
+  font-size: 40px;
+  text-align: center;
+}
+.statBlock a.stat:hover .val {
+  color: #fff;
+  background-color: #22c7fc;
+}
+.feedbackBlock {
+  padding: 100px 0px;
+  font-size: 16px;
+  background-color: #fa1557;
+  color: #333;
+  text-align: center;
+}
+.feedbackBlock .heading {
+  font-size: 2em;
+}
+.feedbackBlock .desc {
+  padding: 10px 0;
+}
+.feedbackBlock ul.iconSet {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.feedbackBlock ul.iconSet li {
+  display: inline-block;
+}
+.feedbackBlock ul.iconSet li img {
+  width: 34px;
+}
+.rights {
+  font-size: 12px;
+  background: #222;
+  text-align: center;
+  padding: 20px 0px;
+}
+.regFormBlock {
+  position: relative;
+  max-width: 400px;
+  margin: auto;
+  margin-top: 40px;
+}
+.regFormBlock .border_frame {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+.regFormBlock .border_frame img {
+  width: 100%;
+  height: 100%;
+}
+.regFormBlock form {
+  width: 100%;
+  position: relative;
+  padding: 20px 10px;
+  text-align: center;
+}
+.regFormBlock form input {
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid #666;
+}
+.regFormBlock .formHeader {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.regFormBlock .formHeader .signupIcon {
+  width: 64px;
+}
+.regFormBlock .formHeader .title {
+  color: #fa1557;
+  font-size: 32px;
+}
+.regFormBlock .fieldSet {
+  padding-top: 20px;
+}
+.regFormBlock .fieldSet .fieldRow {
+  margin-bottom: 20px;
+}
+.regFormBlock .fieldSet .fInput {
+  width: 60%;
+  padding: 5px;
+  text-align: center;
+}
+.regFormBlock .fieldSet .captcha {
+  margin-top: 40px;
+  margin-bottom: 10px;
+}
+.regFormBlock .fieldSet .btnSignUp {
+  margin-top: 50px;
+  width: 100px;
+  background-color: transparent;
+  border: 1px solid #fa1557;
+  color: #fa1557;
+}
+.regFormBlock .fieldSet .btnSignUp:hover {
+  background-color: #fa1557;
+  color: #fff;
+}
+.loginFormBlock {
+  position: relative;
+  max-width: 400px;
+  margin: auto;
+  margin-top: 40px;
+}
+.loginFormBlock .border_frame {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+.loginFormBlock .border_frame img {
+  width: 100%;
+  height: 100%;
+}
+.loginFormBlock form {
+  width: 100%;
+  position: relative;
+  padding: 20px 10px;
+  text-align: center;
+}
+.loginFormBlock form input {
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid #666;
+  font-size: 18px;
+}
+.loginFormBlock .formHeader {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.loginFormBlock .formHeader .signupIcon {
+  width: 64px;
+}
+.loginFormBlock .formHeader .title {
+  color: #fa1557;
+  font-size: 32px;
+}
+.loginFormBlock .fieldSet {
+  padding-top: 20px;
+}
+.loginFormBlock .fieldSet .fieldRow {
+  margin-bottom: 20px;
+}
+.loginFormBlock .fieldSet .fInput {
+  width: 60%;
+  padding: 5px;
+  text-align: center;
+}
+.loginFormBlock .fieldSet .captcha {
+  margin-top: 40px;
+  margin-bottom: 10px;
+}
+.loginFormBlock .fieldSet .btnLogin {
+  margin-top: 50px;
+  width: 100px;
+  background-color: transparent;
+  border: 1px solid #fa1557;
+  color: #fa1557;
+}
+.loginFormBlock .fieldSet .btnLogin:hover {
+  background-color: #fa1557;
+  color: #fff;
+}
+.pgWait {
+  font-size: 22px;
+  color: #b3b3b3;
+}
+.pgWait .textBlue {
+  color: #22c7fc;
+}
+.pgWait .textRed {
+  color: #fa1557;
+}
+.pgWait .welcomeBlock {
+  padding: 40px 10px;
+  font-size: 26px;
+}
+.pgWait .welcomeBlock .title {
+  font-size: 2.2em;
+}
+.pgWait .queueBlock {
+  font-size: 26px;
+  padding: 40px 10px;
+}
+.pgWait .queueBlock p {
+  margin-bottom: 0px;
+}
+.pgWait .queueBlock .position {
+  font-size: 1.2em;
+}
+.pgWait .pingBlock {
+  padding: 40px 10px;
+  background-color: #fff;
+  color: #666;
+}
+.pgWait .pingBlock #delay {
+  font-size: 1.5em;
+  display: inline-block;
+  padding: 0 5px;
+}
+.pgWait .pingBlock img.latency {
+  width: 100%;
+  max-width: 500px;
+}
+.pgWait .twitchTV {
+  padding: 40px 10px;
+  background-color: #22c7fc;
+}
+.pgWait .twitchTV .title {
+  font-size: 38px;
+  margin-bottopm: 20px;
+  color: #333;
+}

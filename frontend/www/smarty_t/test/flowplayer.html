@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title> Test Flowplayer </title>
+    
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script>
+	<script type="text/javascript" src="http://cdn.jquerytools.org/1.2.7/full/jquery.tools.min.js"></script>
+	<script type="text/javascript" src="{{vendor_url('flowplayer/3.2.18/flowplayer-3.2.13.min.js')}}"></script>
+</head>
+<!-- onresize="handleWindowResize()"  -->
+<body style="margin:0;"; onresize="handleWindowResize()"> 
+
+<!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    CSS
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+    
+    <style>
+        #player {  border: 0px solid blue; }
+    </style>
+
+<!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    HTML
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+    
+
+    <div id="player" style="{{$playerStyle.default}}">
+        <img src="{{images_url('logo/swyo_big.png')}}" width="100%" />
+    </div>
+
+<!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    SCRIPT 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->   
+
+<script>
+
+    //###########################################################################
+    // ON DOM READY
+    //###########################################################################
+
+        $(document).ready(function(){
+            $( "#player" ).trigger( "click" );
+
+            $( "#player" ).on( "click", function() {
+                alert( "player clicked" );
+            });
+        });
+
+    //###########################################################################
+    // ON WINDOW RESIZE
+    //###########################################################################
+
+        function handleWindowResize()
+        {
+            $("#player").width($(window).width());
+        }
+
+    //###########################################################################
+    // PRINT
+    //###########################################################################
+
+        var PRINT = 
+        {
+            func_name: function(name) {
+                console.log( " ----------- "+name+" ----------- " );
+            },
+            clip_dimentions: function() {
+                console.log( 'width = '+ $f("player").getClip().width );
+                console.log( 'height = '+ $f("player").getClip().height );
+            },
+            none: 'none'
+        };
+
+    //###########################################################################
+    // FLOWPLAYER SETUP
+    //###########################################################################
+
+        $f("player",{
+            // ---------- FLASH CONFIGURATION -----------------------------
+            src: "{{vendor_url('flowplayer/3.2.18/flowplayer-3.2.18.swf')}}",
+            wmode: "opaque",
+        },{
+           // ---------- PLAYER CONFIGURATION -----------------------------
+            onLoad: function() {
+                PRINT.func_name('player::onLoad');
+            },
+            clip: {
+                url: '{{$serverData.videoID}}',
+                provider: 'rtmp',
+                scaling: 'fit',
+                autoPlay: true,
+                live: true,
+                //------------------------------
+                // metaData: false,
+                // accelerated: true,
+                // bufferLength: 0.0, 
+                // bufferTime: 0.0, 
+                // ratio: 9/16,
+                //------------------------------
+                onBegin: function() { 
+                    PRINT.func_name('clip::onBegin');
+                },
+                onMetaData: function(clip) {
+                    PRINT.func_name('clip::onMetaData');
+                    console.log(clip.metaData);
+                },
+                onStart: function(clip) { 
+                    PRINT.func_name('clip::onStart');
+
+                    if('provider' in clip && clip.provider == 'rtmp') {
+                        setTimeout(function(){
+                            $("#player").width($(window).width());
+                        },10000);
+                    }
+                },
+                onResized: function(clip) { 
+                    if('provider' in clip && clip.provider == 'rtmp') {
+                        PRINT.func_name('clip::onResized');
+                        PRINT.clip_dimentions();
+                    }
+                }
+            },
+            plugins: {
+                controls: null,
+                rtmp: { 
+                    all: false,
+                    url: "{{vendor_url('flowplayer/rtmp/flowplayer.rtmp-3.2.13.swf')}}",
+                    inBufferSeek: false,
+                    netConnectionUrl: 'rtmp://{{$serverData.videoServerIP}}:{{$serverData.videoServerPort}}/{{$serverData.applicationID}}/'
+                }
+            },
+            /*playlist:  [ 
+                {
+                    url: "{{videos_url('BannerVideo.mp4')}}",
+                    duration: 2
+                },
+                {
+                    url: '{{$serverData.videoID}}',
+                    provider: 'rtmp',
+                    live: true,
+                    autoPlay: true
+                }
+            ],*/
+        });
+
+
+    //###########################################################################
+    // FLOWPLAYER API
+    //###########################################################################
+
+        /*flowplayer(function (api, root) {
+ 
+            api.bind("load", function () {
+
+                // do something when a new video is about to be loaded
+                console.log('load');
+
+            }).bind("ready", function () {
+
+                // do something when a video is loaded and ready to play
+                console.log('read');
+
+            });
+         
+        });*/
+
+
+</script>
+
+
+
+
+</body>
+</html>

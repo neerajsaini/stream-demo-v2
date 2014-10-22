@@ -1,0 +1,81 @@
+{{extends file = 'layout/master.html'}}
+
+{{block pgContent}} {{/block}}
+
+{{block 'script'}} 
+<script> $(document).ready(function(){
+// -------------------------------------
+
+	check_status(true);
+	function check_status(loop) {
+		$.ajax({
+			type: "GET",
+			url: '{{site_url("wait/ajx_checkStatus")}}',
+		  	dataType: 'json',
+			success: function(response) { 
+				console.log(response); 
+				if(response.status=='PLAY') {
+					window.location.href = '{{site_url("play")}}' ;
+				}
+				else if(response.status=='PLAY_TIME_OUT') {
+					window.location.href = '{{site_url("logout")}}' ;
+				}
+				if(loop==true){
+					setTimeout(function(){ check_status(loop) }, 5000);
+				}
+			}
+		});
+	}
+
+	
+	
+
+	var ping_start = 0;
+	var ping_end = 0;
+	var ping_delay = 0;
+	var loop_count = 2 ;
+	// getPingDelay_ajax( loop_count );
+	// getPingDelay_img( img );
+	
+
+	function getPingDelay_img()
+	{
+		ping_start = new Date().getTime();
+		var img = new Image();
+		img.src = "{{images_url('icon/transparent.gif')}}";
+		img.onload = function() {
+	    	ping_end = new Date().getTime();
+	    	ping_delay += ping_end - ping_start;
+	    	alert(ping_delay);
+		}
+	}
+	
+	function getPingDelay_ajax(loop)
+	{
+		$.ajax({
+			dataType: 'jsonp',
+			type: 'get',
+			url: "http://www.trackre.net"
+			,beforeSend: function(  ) {
+				ping_start = new Date().getTime();
+			}
+			,complete: function () {
+				ping_end = new Date().getTime();
+				ping_delay += ping_end - ping_start;
+
+				if(loop > 1) {
+					setTimeout(function(){ getPingDelay_ajax(--loop) } , 100);
+				}
+				else {
+					alert((ping_delay/loop_count)/2);
+				}
+			}
+		});
+	}
+	
+
+	
+
+// -------------------------------------
+}); </script>
+{{/block}}

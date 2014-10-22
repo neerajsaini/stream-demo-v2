@@ -1,0 +1,196 @@
+{{extends file = 'layout/master_v2.html'}}
+
+{{block pgContent}} 
+
+<a id="btnLogout"  href="{{site_url('logout')}}">
+<img src="{{images_url('icon/logout.png')}}" width="100%">
+</a>
+
+<a id="btnHome"  href="{{site_url('home')}}" style="display:block; position:fixed; margin-left: 15px; margin-top:15px;">
+	<div class="glyphicon glyphicon-home" style="font-size:32px;"></div>
+</a>
+
+<div class="pgContent pgWait">
+
+	<div class="container text-center">
+	
+
+		<div class="welcomeBlock">
+			<div class="title">
+				Welcome <span class="textBlue playerName"> {{$ci->session->userdata('playerName')}} </span> 
+				<br> {{if $player.isPremium}} PREMIUM {{/if}}
+			</div>
+			<div class="content">
+				Shadow of Modor works only on <br>
+				<span class="red">Chrome</span> & <span class="red">Firefox</span>
+			</div>
+		</div>
+
+
+
+		<img src="{{images_url('wait/line.png')}}" alt="">
+
+
+
+		<div class="queueBlock">
+			<p> 
+				You are in queue
+				<span class="qIndex" style="display:none;"> 
+					at position <span class="qpos textBlue"></span>
+				</span> 
+			</p>
+			<p> Keep this browser <span class="textBlue">tab</span> <span class="textRed">open</span> to stay in the <span class="_textRed">queue</span> </p>
+			
+		</div>
+
+	</div>  <!-- container -->
+
+
+
+
+
+	<!-- ### pingBlock ### -->
+	<div class="pingBlock">
+		<div class="container text-center">
+			<!-- <p> 
+				Expect a delay of  
+				<span id="delay" class="textRed"> ...... </span> 
+				<span class="textBlue"> milliseconds </span>  
+				when playing 
+			</p> -->
+			<p>
+				Consider that the distance from you to our server affects the delay
+			</p>
+			<br>
+			<img src="{{images_url('wait/latency_animated.gif')}}" class="latency">
+		</div>  <!-- container -->
+	</div> <!-- pingBlock -->
+
+
+
+
+	<!-- ### twitchTV ### -->
+	<div class="twitchTV">
+		<div class="container text-center">
+			<a class="title" href="http://www.twitch.tv/swyoexp"> watch SWYO @ twitch.tv </a>
+			<!-- <iframe src="http://www.twitch.tv/swyoexp/embed" frameborder="0" scrolling="no" height="378" width="620"></iframe> -->
+		</div>  <!-- container -->
+	</div>	<!-- twitchTV -->
+
+
+
+
+	<!-- ### feedbackBlock ### -->
+	<div class="feedbackBlock">
+		<div class="container">
+			<div class="heading"> We value your feedback! </div>
+			<p class="desc"> Like the experiment? Help us spread the word out! </p>
+			<ul class="iconSet">
+				<!-- <li> <img src="{{images_url('icon/facebook.png')}}" alt=""> </li>
+				<li> <img src="{{images_url('icon/google.png')}}" alt=""> </li>
+				<li> <img src="{{images_url('icon/tweeter.png')}}" alt=""> </li> -->
+				<span class='st_facebook_large' displayText='Facebook'></span>	
+				<span class='st_googleplus_large' displayText='Google +'></span>
+				<span class='st_twitter_large' displayText='Tweet'> </span>
+			</ul>
+		</div>
+	</div>
+
+	<!-- ### rights ### -->
+	<div class="rights">
+		<div class="container">
+			© 2014 All Rights Reserved – <span class="hlight">SevenRE UG</span> | Contact
+		</div>
+	</div>
+
+</div>
+{{/block}}
+
+
+
+
+{{block 'script'}} 
+<script> $(document).ready(function(){
+// -------------------------------------
+
+	check_status(true);
+	function check_status(loop) {
+		$.ajax({
+			type: "GET",
+			url: '{{site_url("wait/ajx_checkStatus")}}',
+		  	dataType: 'json',
+			success: function(response) { 
+				console.log(response); 
+				if(response.status=='PLAY') {
+					window.location.href = '{{site_url("playws")}}' ;
+				}
+				else if(response.status=='PLAY_TIME_OUT') {
+					window.location.href = '{{site_url("logout")}}' ;
+				}
+				else if(response.inPQueue == 1) { 
+					$(".qpos").text('#'+response.qpos);
+					$(".qIndex").show();
+				}
+				else if(response.isPremium == 1) { 
+					$(".qpos").text('#'+response.qpos);
+					$(".qIndex").show();
+				}
+
+				if(loop==true){
+					setTimeout(function(){ check_status(loop) }, 5000);
+				}
+			}
+		});
+	}
+
+	var ping_start = 0;
+	var ping_end = 0;
+	var ping_delay = 0;
+
+	getPingDelay_img( );
+	// getPingDelay_ajax ( 5 );
+	
+	
+	function getPingDelay_img()
+	{
+		ping_start = new Date().getTime();
+		var img = new Image();
+		img.src = "{{images_url('icon/transparent.gif')}}";
+		img.onload = function() {
+	    	ping_end = new Date().getTime();
+	    	$("#delay").html( ping_end - ping_start );
+		}
+	}
+	
+	function getPingDelay_ajax(loop)
+	{
+		$.ajax({
+			dataType: 'jsonp',
+			type: 'get',
+			url: "http://www.trackre.net"
+			,beforeSend: function(  ) {
+				ping_start = new Date().getTime();
+			}
+			,complete: function () {
+				ping_end = new Date().getTime();
+				ping_delay += ping_end - ping_start;
+
+				var final_delay = Math.ceil((ping_delay/loop_count)) ;
+
+				if(loop > 1) {
+					setTimeout(function(){ getPingDelay_ajax(--loop) } , 400);
+					$("#delay").html(final_delay);
+				}
+				else {
+					$("#delay").html(final_delay);
+				}
+			}
+		});
+	}
+	
+
+	
+
+// -------------------------------------
+}); </script>
+{{/block}}

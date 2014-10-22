@@ -1,0 +1,41 @@
+
+				
+	<form id="formLogin" role="form">
+		<!-- VALIDATION ERRORS  -->
+
+		<div class="validation_errors" style="padding:10px; margin-bottom:20px; background: pink; display:none;">
+		</div>
+		<!-- playerName  -->
+		<div class="form-group">
+			<label for="" class="control-label"> Player Name </label>
+			<!-- <input type="text" name="playerName" class="form-control" value="{{set_value('playerName')}}" > -->
+			<input type="text" name="playerName" class="form-control" value="JohnyDep99" >
+		</div>
+		<!-- password  -->
+		<div class="form-group">
+			<label for="" class="control-label"> Password </label>
+			<input type="password" name="password" class="form-control" value="admin" >
+		</div>
+		<!-- button  -->
+		<button type="button" id="btnLogin" class="btn btn-warning btn-lg btn-block"> Login </button>
+	</form>
+
+	<script>
+		$("#btnLogin").click(function(e){
+			e.preventDefault();
+			$.ajax({
+				type: "POST",
+				url: "{{site_url('login')}}",
+				data:  $( "#formLogin" ).serialize() ,
+				dataType : 'json' ,
+				success: function (response) {
+					if(response.error == true) {
+						$("#formLogin .validation_errors").html(response.errorMsg).show();
+					}
+					else {
+						window.location = "{{site_url('join')}}";
+					}
+				}
+			});
+		});
+	</script>
