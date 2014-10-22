@@ -52,7 +52,8 @@ switch($_SERVER['HTTP_HOST'])
 {
 
 	case 'www.seven-re.com':
-		$hostname = 'streamDemoV1.db.10890232.hostedresource.com' ;
+		// $hostname = 'streamDemoV1.db.10890232.hostedresource.com' ;
+		$hostname = '127.0.0.1' ;
 		$username = 'streamDemoV1' ;
 		$password = 'NeerajSaini28!' ;
 		$database = 'streamDemoV1' ;
