@@ -1,5 +1,4 @@
 <?php
-
 /*
  *---------------------------------------------------------------
  * APPLICATION ENVIRONMENT
@@ -109,6 +108,7 @@ if (defined('ENVIRONMENT'))
 	}
 	define('ROOT_FOLDER_PATH', 		$_SERVER['DOCUMENT_ROOT'].'/'.$ROOT_FOLDER);
 	define('WS_FOLDER_PATH', 		ROOT_FOLDER_PATH . 'demo/v2/');
+	// define('PRITTY_URL_PREFIX', 	'swyo');
 	define('PRITTY_URL_PREFIX', 	FALSE);
 	//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	$DEFINE['SHARED_CI_PATH'] 	=		WS_FOLDER_PATH . $SHARED_CI_VER;

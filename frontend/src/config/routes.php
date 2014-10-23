@@ -40,7 +40,7 @@
 
 if( defined('PRETTY_URL_PREFIX') && PRETTY_URL_PREFIX )
 {
-	$route[PRETTY_URL_PREFIX] = "welcome";
+	$route[PRETTY_URL_PREFIX] = "home";
 	$route[PRETTY_URL_PREFIX.'/(:any)'] = "$1";
 }
 
