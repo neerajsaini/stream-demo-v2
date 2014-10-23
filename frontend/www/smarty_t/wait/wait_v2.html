@@ -113,7 +113,7 @@
 <script> $(document).ready(function(){
 // -------------------------------------
 
-	check_status(true);
+	// check_status(true);
 	function check_status(loop) {
 		$.ajax({
 			type: "GET",
@@ -137,7 +137,7 @@
 				}
 
 				if(loop==true){
-					setTimeout(function(){ check_status(loop) }, 30000);
+					setTimeout(function(){ check_status(loop) }, 60000);
 				}
 			}
 		});
